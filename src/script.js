@@ -61,10 +61,6 @@ gltfLoader.load( '/models/mini.gltf', function ( gltf ) {
 
 
 // Materials
-const material = new THREE.MeshToonMaterial({
-    color: parameters.materialColor,
-})
-
 const glassMaterial = new THREE.MeshPhysicalMaterial( {
     color: 0xffffff, metalness: 0.25, roughness: 0, transmission: 1.0
 } );
