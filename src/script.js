@@ -1,5 +1,4 @@
 import * as THREE from 'three'
-import * as dat from 'lil-gui'
 import gsap from 'gsap'
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
@@ -8,26 +7,6 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 
 
-/**
- * Debug
- */
-const gui = new dat.GUI()
-
-const parameters = {
-    materialColor: '#ffeded'
-}
-
-gui
-    .addColor(parameters, 'materialColor')
-    .onChange(() =>
-    {
-        material.color.set(parameters.materialColor)
-        particlesMaterial.color.set(parameters.materialColor)
-    })
-
-/**
- * Base
- */
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
@@ -36,7 +15,6 @@ const scene = new THREE.Scene()
 scene.background = new THREE.Color( 0x333333 );
 scene.environment = new RGBELoader().load('/textures/equirectangular/venice_sunset_1k.hdr')
 scene.environment.mapping = THREE.EquirectangularReflectionMapping;
-
 
 
 // Loaders
@@ -158,7 +136,6 @@ let scrollY = window.scrollY
 let currentSection = 0
 
 
-
 // Scroll Animations
 window.addEventListener('scroll', () =>
 {
@@ -202,61 +179,17 @@ window.addEventListener('scroll', () =>
                 )
         }
 
-        // if(currentSection === 2)
-        // {
-        //     gsap.to(
-        //         car.rotation,
-        //         {
-        //             duration: 3,
-        //             ease: 'power2.inOut',
-        //             x: 0,
-        //             y: - Math.PI / .3,
-        //             z: 0
-        //         }
-        //     )
-        // }
-        // else
-        // {
-        //     gsap.to(
-        //         car.rotation,
-        //         {
-        //             duration: 3,
-        //             ease: 'power2.inOut',
-        //             x: 0,
-        //             y: 0,
-        //             z: 0
-        //         }
-        //     )
-        // }
     }
 })
 
 
-// gsap.to(
-//     camera.position,
-//     {
-//         duration: 1.5,
-//         delay: 2,
-//         ease: 'power2.inOut',
-//         x: cameraPositions[0].x,
-//         y: cameraPositions[0].y,
-//         z: cameraPositions[0].z
-//     }
-// )
 
-/**
- * Animate
- */
 const clock = new THREE.Clock()
-let previousTime = 0
 
+// Amimation
 const tick = () =>
 {
-
-
     const elapsedTime = clock.getElapsedTime()
-    const deltaTime = elapsedTime - previousTime
-    previousTime = elapsedTime
     for ( let i = 0; i < wheels.length; i ++ ) {
         wheels[ i ].rotation.z = elapsedTime * Math.PI;
     }
@@ -268,7 +201,6 @@ const tick = () =>
     renderer.render(scene, camera)
 
     controls.update()
-
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
 }
